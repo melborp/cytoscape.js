@@ -36,15 +36,15 @@ CRp.drawInscribedImage = function(context, img, node) {
   var imgW = img.width || img.cachedW;
   var imgH = img.height || img.cachedH;
 
-  // workaround for broken browsers like ie
-  if( null == imgW || null == imgH ){
+  // workaround for broken browsers like ie - doesnt help
+/*  if( null == imgW || null == imgH ){
     document.body.appendChild( img );
 
     imgW = img.cachedW = img.width || img.offsetWidth;
     imgH = img.cachedH = img.height || img.offsetHeight;
 
     document.body.removeChild( img );
-  }
+  }*/
 
   var w = imgW;
   var h = imgH;
@@ -69,6 +69,12 @@ CRp.drawInscribedImage = function(context, img, node) {
 
   if( w === 0 || h === 0 ){
     return; // no point in drawing empty image (and chrome is broken in this case)
+  }
+  
+  //For IE, since width / heigth is 0 by IE
+  if (img.width === 0 || img.height === 0) {
+      imgW = w;
+      imgH = h;
   }
 
   if( fit === 'contain' ){
